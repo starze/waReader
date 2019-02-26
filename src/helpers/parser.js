@@ -1,7 +1,8 @@
 import parserUtils from './parserUtils';
 import moment from 'moment';
 
-const RegExrNormalUserMessage = /^(((\d+)(\/)(\d+)(\/)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )([^:]*)(:)(\s)(.*))/,
+//const RegExrNormalUserMessage = /^(((\d+)(\/)(\d+)(\/)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )([^:]*)(:)(\s)(.*))/,
+const RegExrNormalUserMessage = /^(((\d+)(.)(\d+)(.)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )([^:]*)(:)(\s)(.*))/,
   RegExrtSystemMessage = /^(((\d+)(\/)(\d+)(\/)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )(.*))/;
 
 /**
