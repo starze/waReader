@@ -4,6 +4,7 @@ import moment from 'moment';
 //const RegExrNormalUserMessage = /^(((\d+)(\/)(\d+)(\/)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )([^:]*)(:)(\s)(.*))/,
 const RegExrNormalUserMessage = /^(((\d+)(.)(\d+)(.)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )([^:]*)(:)(\s)(.*))/,
   RegExrtSystemMessage = /^(((\d+)(\/)(\d+)(\/)(\d+))(, )((\d+)(:)(\d+)( (AM|PM))?)( - )(.*))/;
+const REGEX_IMAGE = /(IMG-\d+-WA\d+\.jpg)\s\(Datei angehängt\)?/gm;
 
 /**
  * Parses the content of a Whatsapp txt chat export file and returns 
@@ -45,11 +46,13 @@ const parseTextFile = (text, intitalDateTime, finalDateTime, dateSystem) => {
       if (hasReachedFinalDateTime) return {};
 
       let lineData = RegExrNormalUserMessage.exec(line);
+      const msg = lineData[19];
+      const imageTaggedMsg = msg.replace(REGEX_IMAGE, '<img src=$1 style="width:500px;" />');
       let datetimeFormatString = parserUtils.getDateFormat(lineData[13], dateSystem);
       // let msgDateTime = moment(`${lineData[2]} ${lineData[9]}`, datetimeFormatString) === null ? : 
       let msgObj = {
         datetime: moment(`${lineData[2]} ${lineData[9]}`, datetimeFormatString),
-        msg: lineData[19],
+        msg: imageTaggedMsg,
         user: {
           name: lineData[16],
           letter: parserUtils.getUserLetter(lineData[16]),
